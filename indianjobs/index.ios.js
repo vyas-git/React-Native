@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class indianjobs extends Component {
+export default class AwesomeProject extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('indianjobs', () => indianjobs);
+AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
