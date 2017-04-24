@@ -1,81 +1,65 @@
 import React, {Component} from 'react';
-import { Image,Text,TouchableHighlight} from 'react-native';
-import {Header,Left, Button, Icon, Title, Body, Right,Content,Card,CardItem,List,ListItem} from 'native-base';
+import { Image,Text,TouchableHighlight,Navigator} from 'react-native';
+import {Header,Left, Button, Icon, Title, Body, Right,Content,Container,Card,CardItem,List,ListItem} from 'native-base';
 
 
 export default class AppBodyData extends Component  {
-  onnavigate(title,company,snippet,url){
-
-    this.props.navigator.push({
-
-      id:2,
-      jobtitle:title,
-      company:company,
-      snippet:snippet,
-      url:url,
-
-    }
-
-    );
-  }
 
     render() {
-      const b = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
-
-      let titles=this.props.data.map(function(data,index){
-
-        let snippet=data.snippet.replace("<b>","");
-        snippet=snippet.replace("</b>","");
-return(
-/*
-  <Card>
-
-                   <CardItem>
-                            <Left>
-                                <Body>
-                                    <Text>{data.jobtitle}</Text>
-                                    <Text note>{data.company}</Text>
-                                </Body>
-                            </Left>
-                          </CardItem>
-                          <CardItem cardBody>
-                              <Image/>
-                          </CardItem>
-                          <CardItem content>
-
-                              <Text>{snippet}</Text>
+      let titles=this.props.data.map((data,index)=>(
+  <Card key={index}>
+                          <CardItem>
+                              <Left>
+                              <Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>#{index+1}</Text>
+                                  <Body>
+                                      <Text>{data.jobtitle}</Text>
+                                      <Text note><Text style={{fontWeight:'bold'}}>Company</Text> : {data.company}</Text>
+                                  </Body>
+                              </Left>
                           </CardItem>
                           <CardItem>
-                              <Button transparent>
-                                  <Icon active name="thumbs-up" />
-                                  <Text>12 Likes</Text>
-                              </Button>
-                              <Button transparent>
-                                  <Icon active name="chatbubbles" />
-                                  <Text>4 Comments</Text>
-                              </Button>
-                              <Text>11h ago</Text>
-                        </CardItem>
+                              <Body>
+                                  <Text>{data.snippet}</Text>
+                                  <Button transparent textStyle={{color: '#AA00FF'}}>
+                                  <Icon style={{color: '#AA00FF'}} name="time" />
+                                  <Left><Text style={{textAlign:'left'}}> {data.date}</Text></Left>
+                                  </Button>
+                                  <Button style={{backgroundColor:'#263238'}} full>
+                                  <Text style={{color:'#fff'}}   >View/Apply Now</Text>
+                                  </Button>
+                              </Body>
+                          </CardItem>
+                     </Card>
 
-  </Card>*/
-                        <ListItem>
-                        <TouchableHighlight onPress={this.onnavigate("jkjk","jhjh",snippet,"kjbj")}>
-  <Text>{data.jobtitle}</Text>
-  </TouchableHighlight>
-
-                        </ListItem>
-
-);
-      });
+      ));
       return(
-      <Content>
-      <List>
 
+    <Container>
+     <Content>
        {titles}
-       </List>
+     </Content>
+     </Container>
 
-      </Content>
     );
+
+
     }
+
+onnavigate(title,company,snippet,url){
+
+        this.props.navigator.push({
+
+          id:2,
+          jobtitle:title,
+          company:company,
+          snippet:snippet,
+          url:url
+
+        }
+
+        );
+    }
+
+
 }
 module.export = AppBodyData;

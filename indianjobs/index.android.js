@@ -1,50 +1,68 @@
 import React, {Component} from 'react';
-import {Text, AppRegistry,View,TouchableHighlight,Navigator} from 'react-native';
+import {Text, AppRegistry,View,TouchableHighlight,Navigator,NetInfo} from 'react-native';
 import {Container, StyleProvider} from 'native-base';
 import getTheme from './src/themes/components';
 import material from './src/themes/variables/material';
 
-import AppHeader from './src/components/appHeader';
+import AppDrawer from './src/components/appDrawer';
 import AppFooter from './src/components/appFooter';
 import AppBody from './src/components/appBody';
-import jobView from './src/components/jobView';
-
+import ViewJob from './src/components/jobView';
+import {NativeModules, processColor } from 'react-native';
+const { StatusBarManager } = NativeModules;
 export default class MyProject extends Component {
 
+  state = {
+    isConnected: null,
+  };
+  componentDidMount() {
+    StatusBarManager.setColor(processColor('#D500F9'), false);
+
+    NetInfo.isConnected.addEventListener(
+        'change',
+        this._handleConnectivityChange
+    );
+    NetInfo.isConnected.fetch().done(
+        (isConnected) => { this.setState({isConnected}); }
+    );
+  }
+
+
+  componentWillUnmount() {
+
+    NetInfo.isConnected.removeEventListener(
+        'change',
+        this._handleConnectivityChange
+    );
+  }
+
+  _handleConnectivityChange = (isConnected) => {
+    this.setState({
+      isConnected,
+    });
+  };
 
 render() {
-
   return (
-     <Navigator initialRoute={{id:'1'}} renderScene={this.navigatirRenderScene}/>
+     <Navigator initialRoute={{id:1}} renderScene={this.navigatirRenderScene}/>
 
     );
+
 
 }
 navigatirRenderScene(route,navigator){
 
   _navigator=navigator;
   switch (route.id) {
-    case '1':
+    case 1:
     return(
-      <StyleProvider style={getTheme(material)}>
-           <Container>
-             <AppHeader/>
-             <AppBody/>
-             <AppFooter/>
-           </Container>
-           </StyleProvider>
+
+             <AppDrawer navigator={navigator}/>
+
     );
 
-      case '2':
-      return(<MainSecene navigator={navigator} data={0} what={'What'} where={'Where'} when={'When'}  title='MainSecene'/>);
-
-      case 1:
-      return(<MainSecene navigator={navigator} data={1} what={route.text} where={'Where'} when={'When'} title='Where-Secene'/>);
-
       case 2:
-      return(<MainSecene navigator={navigator} data={2} what={route.prevText} where={route.text} when={'When'} title='Where-Secene'/>);
-      case 3:
-      return(<AppHeader navigator={navigator} what={route.what} where={route.where} when={route.when} />);
+      return(<ViewJob navigator={navigator} title={route.jobtitle} company={route.company} snippet={route.snippet} url={route.url}/>);
 
 
       break;
