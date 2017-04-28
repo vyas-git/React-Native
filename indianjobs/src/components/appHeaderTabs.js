@@ -16,9 +16,6 @@ export default class AppHeaderTabs extends Component  {
               <Tab heading="#Top" tabStyle={{backgroundColor: '#AA00FF'}} textStyle={{color: '#fff'}} activeTabStyle={{backgroundColor: '#AA00FF'}} activeTextStyle={{color: '#fff', fontWeight: 'normal'}}>
               <AppBody navigator={this.props.navigator}/>
               </Tab>
-              <Tab heading="More Jobs" tabStyle={{backgroundColor: '#AA00FF'}}  textStyle={{color: '#fff'}} activeTabStyle={{backgroundColor: '#AA00FF'}} activeTextStyle={{color: '#fff', fontWeight: 'normal'}}>
-              <AppBody navigator={this.props.navigator}/>
-              </Tab>
           </Tabs>
           </Container>
         );

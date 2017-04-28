@@ -18,7 +18,7 @@ export default class AppBody extends Component {
 
   getData(){
 
-    return fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q=java&l=austin&v=2&format=json')
+    return fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q=walk-in&l=Hyderabad&co=in&v=2&format=json')
      .then((response) => response.json())
      .then((responseJson) => {
 this.setState({

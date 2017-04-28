@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import { Image,Text,TouchableHighlight,Navigator} from 'react-native';
-import {Header,Left, Button, Icon, Title, Body, Right,Content,Container,Card,CardItem,List,ListItem} from 'native-base';
+import {Header,Left,Toast,Button, Icon, Title, Body, Right,Content,Container,Card,CardItem,List,ListItem} from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 
+let start_val=0;
 
 export default class AppBodyData extends Component  {
 
@@ -15,26 +17,52 @@ constructor(){
 
     jobResults:[],
     contentOffsetY:0,
+    data:[],
+    visible: false,
+
+
 
   };
 
 
 }
 _onScroll(e){
+
     var contentOffset = e.nativeEvent.contentOffset.y;
-    this.state.contentOffsetY < contentOffset ? this.getMoreJobs() : console.log("Scroll Up");
-    this.setState({contentOffsetY: contentOffset});
+    this.state.contentOffsetY < contentOffset ? this.getMoreJobs(start_val*10) : console.log("Scroll Up");
+    this.setState({contentOffsetY: contentOffset, visible: !this.state.visible});
+    start_val++;
+
   }
 
-getMoreJobs(){
-  let titles=this.props.data.map((data,index)=>(
-  <Card key={index}>
+getMoreJobs(start){
+
+
+  fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q=walk-in&co=in&l=Hyderabad&v=2&format=json&start='+start+'').then((response) => response.json()) .then((responseJson) => {
+  this.setState({
+  data:responseJson.results,
+  });
+   }).catch((error) => {
+     this.setState({
+       data:'No Internet Connection',
+       isLoading:true,
+       visible: false,
+
+     });
+
+   });
+
+
+  let titles=this.state.data.map((data,index)=>(
+  <Card key={index+start}>
                       <CardItem>
                           <Left>
-                          <Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>#{index+1}</Text>
+                          <Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>#{index+start+1}</Text>
                               <Body>
-                                  <Text>{data.jobtitle}</Text>
-                                  <Text note><Text style={{fontWeight:'bold'}}>Company</Text> : {data.company}</Text>
+                                  <Text style={{fontWeight:'bold'}}>{data.jobtitle}</Text>
+                                  <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Company</Text> - {data.company}</Text>
+                                  <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Source</Text> - {data.source}</Text>
+
                               </Body>
                           </Left>
                       </CardItem>
@@ -46,7 +74,7 @@ getMoreJobs(){
                               <Left><Text style={{textAlign:'left'}}> {data.date}</Text></Left>
                               </Button>
                               <Button style={{backgroundColor:'#263238'}} full>
-                              <Text style={{color:'#fff'}}   >View/Apply Now</Text>
+                              <Text style={{color:'#fff'}}>View/Apply Now</Text>
                               </Button>
                           </Body>
                       </CardItem>
@@ -55,9 +83,15 @@ getMoreJobs(){
 
   ));
 
+
+
+  this.state.jobResults.push(titles);
+
   this.setState({
 
-    //jobResults:this.state.jobResults,
+    jobResults:this.state.jobResults,
+    visible: false
+
 
   });
 
@@ -65,14 +99,17 @@ getMoreJobs(){
 
 }
 componentDidMount(){
+
 let titles=this.props.data.map((data,index)=>(
 <Card key={index}>
                     <CardItem>
                         <Left>
                         <Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>#{index+1}</Text>
                             <Body>
-                                <Text>{data.jobtitle}</Text>
-                                <Text note><Text style={{fontWeight:'bold'}}>Company</Text> : {data.company}</Text>
+                                <Text style={{fontWeight:'bold'}}>{data.jobtitle}</Text>
+                                <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Company</Text> : {data.company}</Text>
+                                <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Source</Text> : {data.source}</Text>
+
                             </Body>
                         </Left>
                     </CardItem>
@@ -93,9 +130,11 @@ let titles=this.props.data.map((data,index)=>(
 
 ));
 
+
 this.setState({
 
   jobResults:titles,
+  visible: false
 
 });
 
@@ -112,6 +151,8 @@ this.setState({
      <Content onScroll={this._onScroll}>
 {this.state.jobResults}
      </Content>
+     <Spinner visible={this.state.visible}  color={"#D500F9"} textStyle={{color:'black'}} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+
  </Container>
 
     );
