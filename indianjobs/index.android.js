@@ -62,7 +62,7 @@ navigatirRenderScene(route,navigator){
     );
 
       case 2:
-      return(<ViewJob navigator={navigator} title={route.jobtitle} company={route.company} snippet={route.snippet} url={route.url}/>);
+      return(<ViewJob navigator={navigator} url={route.url}/>);
 
 
       break;

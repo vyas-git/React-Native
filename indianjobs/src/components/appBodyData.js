@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Image,Text,TouchableHighlight,Navigator} from 'react-native';
 import {Header,Left,Toast,Button, Icon, Title, Body, Right,Content,Container,Card,CardItem,List,ListItem} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Fa from 'react-native-vector-icons/FontAwesome';
+
 
 let start_val=0;
 
@@ -27,6 +29,7 @@ constructor(){
 
 }
 _onScroll(e){
+  this.setState({visible: false});
 
     var contentOffset = e.nativeEvent.contentOffset.y;
     this.state.contentOffsetY < contentOffset ? this.getMoreJobs(start_val*10) : console.log("Scroll Up");
@@ -59,9 +62,10 @@ getMoreJobs(start){
                           <Left>
                           <Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>#{index+start+1}</Text>
                               <Body>
-                                  <Text style={{fontWeight:'bold'}}>{data.jobtitle}</Text>
-                                  <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Company</Text> - {data.company}</Text>
-                                  <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Source</Text> - {data.source}</Text>
+
+                                                              <Text note><Fa style={{color: '#AA00FF'}} name="building-o" /> - {data.company}</Text>
+                                                              <Text note><Fa style={{color: '#AA00FF'}} name="external-link" /> - {data.source}</Text>
+
 
                               </Body>
                           </Left>
@@ -73,7 +77,7 @@ getMoreJobs(start){
                               <Icon style={{color: '#AA00FF'}} name="time" />
                               <Left><Text style={{textAlign:'left'}}> {data.date}</Text></Left>
                               </Button>
-                              <Button style={{backgroundColor:'#263238'}} full>
+                              <Button onPress={()=>this.onnavigate(data.url)} style={{backgroundColor:'#263238'}} full>
                               <Text style={{color:'#fff'}}>View/Apply Now</Text>
                               </Button>
                           </Body>
@@ -106,21 +110,23 @@ let titles=this.props.data.map((data,index)=>(
                         <Left>
                         <Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>#{index+1}</Text>
                             <Body>
+
                                 <Text style={{fontWeight:'bold'}}>{data.jobtitle}</Text>
-                                <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Company</Text> : {data.company}</Text>
-                                <Text note><Text style={{fontWeight:'bold',color:'#000'}}>Source</Text> : {data.source}</Text>
+
+                                <Text note><Fa style={{color: '#AA00FF'}} name="building-o" /> - {data.company}</Text>
+                                <Text note><Fa style={{color: '#AA00FF'}} name="external-link" /> - {data.source}</Text>
 
                             </Body>
                         </Left>
                     </CardItem>
                     <CardItem>
                         <Body>
-                            <Text>{data.snippet}</Text>
+                            <Text>{data.snippet.replace('<b>','').replace('</b>','')}</Text>
                             <Button transparent textStyle={{color: '#AA00FF'}}>
                             <Icon style={{color: '#AA00FF'}} name="time" />
                             <Left><Text style={{textAlign:'left'}}> {data.date}</Text></Left>
                             </Button>
-                            <Button style={{backgroundColor:'#263238'}} full>
+                            <Button onPress={()=>this.onnavigate(data.url)} style={{backgroundColor:'#263238'}} full>
                             <Text style={{color:'#fff'}}   >View/Apply Now</Text>
                             </Button>
                         </Body>
@@ -146,8 +152,7 @@ this.setState({
 
     render() {
  return(
-
-  <Container>
+   <Container>
      <Content onScroll={this._onScroll}>
 {this.state.jobResults}
      </Content>
@@ -158,14 +163,12 @@ this.setState({
     );
 }
 
-onnavigate(title,company,snippet,url){
+onnavigate(url){
 
         this.props.navigator.push({
 
           id:2,
-          jobtitle:title,
-          company:company,
-          snippet:snippet,
+          
           url:url
 
         }
