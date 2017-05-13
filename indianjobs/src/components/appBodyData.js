@@ -5,7 +5,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Fa from 'react-native-vector-icons/FontAwesome';
 
 
-let start_val=0;
+let start_val=1;
 
 export default class AppBodyData extends Component  {
 
@@ -34,17 +34,16 @@ _onScroll(e){
     var contentOffset = e.nativeEvent.contentOffset.y;
     this.state.contentOffsetY < contentOffset ? this.getMoreJobs(start_val*10) : console.log("Scroll Up");
     this.setState({contentOffsetY: contentOffset, visible: !this.state.visible});
-    start_val++;
 
   }
 
 getMoreJobs(start){
-
-
-  fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q=walk-in&co=in&l=Hyderabad&v=2&format=json&start='+start+'').then((response) => response.json()) .then((responseJson) => {
+/*  fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q=walk-in&co=in&l=Hyderabad&v=2&format=json&sort=date&highlight=0&start='+start+'').then((response) => response.json()) .then((responseJson) => {
   this.setState({
   data:responseJson.results,
   });
+  start_val++;
+
    }).catch((error) => {
      this.setState({
        data:'No Internet Connection',
@@ -55,39 +54,29 @@ getMoreJobs(start){
 
    });
 
+   */
+   if(start==10){
+start_val++
+const data_arr=[0];
 
-  let titles=this.state.data.map((data,index)=>(
-  <Card key={index+start}>
-                      <CardItem>
-                          <Left>
-                          <Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>#{index+start+1}</Text>
-                              <Body>
+  let titles=data_arr.map((data,index)=>(
+  <Card key="finished">
+  <CardItem>
+      <Body>
+      <Left>
+<Text style={{fontWeight:'bold',fontSize: 20,color:'#AA00FF'}}>No More Active Job Results.</Text>
+</Left>
+          <Left><Text style={{textAlign:'left',fontSize: 18,color:'#1B5E20'}}>We render only fresh and active jobs. Try tommorrow for new job openings Thank You!.</Text></Left>
+          <Button onPress={()=>this.props.navigator('Home')} style={{backgroundColor:'#4CAF50'}} full>
+          <Text style={{color:'#fff'}}>Refresh</Text>
+          </Button>
+      </Body>
+  </CardItem>
 
-                                                              <Text note><Fa style={{color: '#AA00FF'}} name="building-o" /> - {data.company}</Text>
-                                                              <Text note><Fa style={{color: '#AA00FF'}} name="external-link" /> - {data.source}</Text>
-
-
-                              </Body>
-                          </Left>
-                      </CardItem>
-                      <CardItem>
-                          <Body>
-                              <Text>{data.snippet}</Text>
-                              <Button transparent textStyle={{color: '#AA00FF'}}>
-                              <Icon style={{color: '#AA00FF'}} name="time" />
-                              <Left><Text style={{textAlign:'left'}}> {data.date}</Text></Left>
-                              </Button>
-                              <Button onPress={()=>this.onnavigate(data.url)} style={{backgroundColor:'#263238'}} full>
-                              <Text style={{color:'#fff'}}>View/Apply Now</Text>
-                              </Button>
-                          </Body>
-                      </CardItem>
                  </Card>
 
 
   ));
-
-
 
   this.state.jobResults.push(titles);
 
@@ -98,6 +87,8 @@ getMoreJobs(start){
 
 
   });
+}
+
 
 
 
@@ -126,7 +117,7 @@ let titles=this.props.data.map((data,index)=>(
                             <Icon style={{color: '#AA00FF'}} name="time" />
                             <Left><Text style={{textAlign:'left'}}> {data.date}</Text></Left>
                             </Button>
-                            <Button onPress={()=>this.onnavigate(data.url)} style={{backgroundColor:'#263238'}} full>
+                  <Button onPress={() => this.props.navigator('JobView',{'url':data.url})} style={{backgroundColor:'#263238'}} full>
                             <Text style={{color:'#fff'}}   >View/Apply Now</Text>
                             </Button>
                         </Body>
@@ -151,30 +142,19 @@ this.setState({
 
 
     render() {
+
  return(
    <Container>
      <Content onScroll={this._onScroll}>
 {this.state.jobResults}
      </Content>
-     <Spinner visible={this.state.visible}  color={"#D500F9"} textStyle={{color:'black'}} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
 
  </Container>
 
     );
 }
 
-onnavigate(url){
 
-        this.props.navigator.push({
-
-          id:2,
-          
-          url:url
-
-        }
-
-        );
-    }
 
 
 }

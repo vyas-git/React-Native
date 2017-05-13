@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Text,Navigator,View,TouchableOpacity} from 'react-native';
-import AppBodyData from './appBodyData';
+import IAppBodyData from './iappBodyData';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default class AppBody extends Component {
+export default class IAppBody extends Component {
   constructor(){
 
     super()
@@ -17,25 +17,15 @@ export default class AppBody extends Component {
   }
 
   getData(){
-
-if(this.props.jobKey=="undefined" || this.props.jobKey==undefined){
-  var jobKey="walk-in";
-
-}else {
-
-  var jobKey=this.props.jobKey;
-
-}
-
-    return fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q='+jobKey+'&l=Hyderabad&co=in&v=2&format=json&sort=date&limit=25&highlight=0')
+    return fetch('http://www.indianjobs.co.in/feeds/posts/default/-/Hyderabad%20IT%20Walk-in%20Jobs?published&alt=json')
      .then((response) => response.json())
      .then((responseJson) => {
-this.setState({
-  data:responseJson.results,
-  isLoading:false
-});
-     }).catch((error) => {
+
+             this.setState({data:responseJson.feed.entry,isLoading:false});
+        }).catch((error) => {
+          console.log(error);
        this.setState({
+
          data:'No Internet Connection',
          isLoading:true
        });
@@ -76,9 +66,10 @@ render() {
     );
   }
 
-  }else {return (
+  }else {
+    return (
 
-  <AppBodyData navigator={this.props.navigator} data={this.state.data}/>
+  <IAppBodyData navigator={this.props.navigator} data={this.state.data}/>
 );
 } // end else
 
@@ -86,4 +77,4 @@ render() {
 
 
 }
-module.export = AppBody;
+module.export = IAppBody;

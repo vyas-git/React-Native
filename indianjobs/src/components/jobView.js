@@ -2,75 +2,47 @@ import React, {Component} from 'react';
 import {Text,View,TouchableHighlight,WebView} from 'react-native';
 import {Header,Left, Button, Icon, Title, Body, Right,Content,Card,CardItem,List,ListItem} from 'native-base';
 import Drawer from 'react-native-drawer';
-import SideBarContent from './SideBarContent';
+import {NativeModules, processColor } from 'react-native';
 const { StatusBarManager } = NativeModules;
+import SideBarContent from './SideBarContent';
+import Fa from 'react-native-vector-icons/FontAwesome';
+import {DrawerNavigator,StackNavigator} from 'react-navigation';
 
-const drawerStyles = {
-    drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
-    main: {paddingLeft: 0},
-}
+
+import { NavigationActions } from 'react-navigation'
 
 export default class ViewJob extends Component {
 
+
   constructor(){
       super();
-      this.closeControlPanel = this.closeControlPanel.bind(this);
-      this.openControlPanel = this.openControlPanel.bind(this);
-
   }
 
-  closeControlPanel = () => {
-      this.refs.drawer.close()
 
-  };
-  openControlPanel = () => {
-      this.refs.drawer.open()
-      StatusBarManager.setColor(processColor('#263238'), false);
+componentDidMount(){
 
-  };
 
+}
 
 
   render() {
+
      return (
-
-
-      <Drawer
-           ref="drawer"
-           type="overlay"
-           content={<SideBarContent />}
-           tapToClose={true}
-           openDrawerOffset={0.2} // 20% gap on the right side of drawer
-           panCloseMask={0.2}
-           onClose={()=>StatusBarManager.setColor(processColor('#D500F9'), false)}
-           closedDrawerOffset={-3}
-           styles={drawerStyles}
-           tweenHandler={(ratio) => ({
-             main: { opacity:(2-ratio)/2 }
-           })}
-     >
-     <View>
-     <View style={{flex: 0, flexDirection: 'row',backgroundColor:'#AA00FF'}}>
-
-   <View style={{flex: 1}}>
-   <Button transparent onPress={this.openControlPanel}>
-       <Icon style={{color:'#fff'}} name='menu' />
-   </Button>
-         </View>
-         <View style={{flex: 2}}>
-             <Title style={{color:'#fff',textAlign:'left',marginTop:10}}>HyderabadJobs</Title>
-             </View>
-
-   </View>
-   <WebView
-     source={{uri: ''+this.props.url+''}}
-     style={{marginTop: 20}}
-   />
-   </View>
-           </Drawer>
-
-       );
+       <WebView scalesPageToFit={true}
+                    renderLoading={()=><Text>No Internet Connection..</Text>}
+                    renderError={()=><Text>No Internet Connection..</Text>}
+                    onError={()=><Text>No Internet Connection..</Text>} source={{uri: ''+this.props.navigation.state.params.url+''}}  />
+     );
 
    }
+   static navigationOptions = ({ navigation }) => ({
+     headerTitle: 'HyderabadJobs - indianJobs.co.in',
+     headerStyle:{backgroundColor:'#AA00FF'},
+     headerTitleStyle:{color:'white',aliginItems:'center',fontSize:15},
+
+   headerLeft:<Icon  style={{color:'white',marginLeft:5}} name={'arrow-back'} onPress={()=>navigation.goBack()}  />
+ });
 }
+
+
 module.export = ViewJob;
