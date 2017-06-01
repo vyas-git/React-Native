@@ -1,6 +1,8 @@
 package com.hyderabadjobs;
 
 import com.facebook.react.ReactActivity;
+import com.sbugert.rnadmob.RNAdMobPackage;
+
 
 public class MainActivity extends ReactActivity {
 
@@ -12,4 +14,5 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "HyderabadJobs";
     }
+
 }

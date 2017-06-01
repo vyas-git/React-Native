@@ -1,53 +1,44 @@
 import React, {Component} from 'react';
-import {Text, ScrollView,AppRegistry,View,TouchableHighlight,Navigator,NetInfo} from 'react-native';
+import {Text, ScrollView,AppRegistry,View,TouchableHighlight,Navigator,NetInfo,Platform,Linking} from 'react-native';
 import {Container,Icon} from 'native-base';
 import AppHeaderTabs from './src/components/appHeaderTabs';
+
+import SearchJobs from './src/components/search';
 import iAppHeaderTabs from './src/components/iAppHeaderTabs';
 import ViewJob from './src/components/jobView';
-import TopRecruitments from './src/components/topRecruitments';
+import FindJobs from './src/components/FindJobs';
+import RateUs from './src/components/rateUs';
 
+import TopRecruitments from './src/components/topRecruitments';
 import {NativeModules, processColor } from 'react-native';
 const { StatusBarManager } = NativeModules;
 import {DrawerNavigator,StackNavigator,TabNavigator} from 'react-navigation';
 import { DrawerItems} from 'react-navigation';
 
-
+import { NavigationActions } from 'react-navigation';
+import {AdMobBanner,AdMobInterstitial,PublisherBanner,AdMobRewarded} from 'react-native-admob';
 export default class MyProject extends Component {
   state = {isConnected: null};
-  static navigationOptions = ({ navigation }) => ({
-  headerTitle: 'HyderabadJobs',
-  headerStyle:{backgroundColor:'#AA00FF'},
-  headerTitleStyle:{color:'white',aliginItems:'center'},
-  headerLeft : <TouchableHighlight style={{marginLeft:5}}>
-  <Icon style={{color:'#fff'}}  name='menu'/>
 
-  </TouchableHighlight>
-
-});
 constructor(){
   super();
-
 }
 componentDidMount() {
 StatusBarManager.setColor(processColor('#D500F9'), false);
-  NetInfo.isConnected.addEventListener('change',this._handleConnectivityChange);
-  NetInfo.isConnected.fetch().done((isConnected) => { this.setState({isConnected}); });
-
-
+NetInfo.isConnected.addEventListener('change',this._handleConnectivityChange);
+NetInfo.isConnected.fetch().done((isConnected) => { this.setState({isConnected}); });
 }
-
-
-
 componentWillUnmount() {
-
-
-  NetInfo.isConnected.removeEventListener('change',this._handleConnectivityChange);
+NetInfo.isConnected.removeEventListener('change',this._handleConnectivityChange);
 }
 _handleConnectivityChange = (isConnected) => {this.setState({isConnected,});};
 render() {
   const { navigate } = this.props.navigation;
-  const drawerStyles = {drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},main: {paddingLeft: 0},}
-  return (<AppHeaderTabs navigator={navigate} jobKey={this.props.jobKey}/>);
+  return (
+
+
+    <AppHeaderTabs navigator={navigate} jobKey={this.props.jobKey}/>
+  );
 
 }
 
@@ -91,29 +82,30 @@ const TabBar = TabNavigator({
 const DrawerView = DrawerNavigator(
   {
   Home: { screen: TabBar },
-  Walkins: { screen: TabBar },
-  TopRecruitments: { screen: ({navigation})=><TopRecruitments navigator={navigation} />},
-  Fresher: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Fresher"}/>},
-  Internship: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:intern"}/>},
-  Electrical: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:electric"}/>},
-  Mechanical: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:mech"}/>},
+
+  "Search Jobs": { screen: ({navigation})=><SearchJobs navigation={navigation} jobKey={"title:Web"}/>},
+  "Rate Us *": { screen: ({navigation})=><RateUs navigation={navigation} url={"https://play.google.com/store/apps/details?id=com.hyderabadjobs"}/>},
+  Walkins: { screen: TabBar},
+  "Top MNC Recruitments": { screen: ({navigation})=><TopRecruitments navigator={navigation} />},
+  "Fresher Jobs": { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Fresher"}/>},
+  Internship: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:internship,intern"}/>},
+  "Electrical Engg Jobs": { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"electrical"}/>},
+  "Mechanical Engg Jobs": { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"mechanical"}/>},
   Marketing: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Marketing"}/>},
   Marketing: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Marketing"}/>},
   Hr: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Hr"}/>},
-
   Android: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Android"}/>},
   Bpo: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"bpo,voice"}/>},
-
-  DotNet: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:.Net"}/>},
-  Ios: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:.ios"}/>},
-
+  'C++': { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:c++"}/>},
+  "Dot Net": { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:.Net"}/>},
+  Ios: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:ios"}/>},
   Java: {screen: ({navigation})=><MyProject navigation={navigation} title={"Java Jobs"} jobKey={"title:java"}/>},
   Php: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Php"}/>},
   Sap: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:SAP"}/>},
   Seo: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Seo"}/>},
-
   Testing: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:testing"}/>},
-  Web: { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Web"}/>},
+  "Web/UI": { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Web"}/>}
+
 
 
 },
@@ -143,7 +135,6 @@ DrawerView.navigationOptions = ({ navigation}) => ({
   headerTitle: 'HyderabadJobs - indianJobs.co.in',
   headerStyle:{backgroundColor:'#AA00FF'},
   headerTitleStyle:{color:'white',aliginItems:'center',fontSize:15},
-
   headerLeft : <TouchableHighlight style={{marginLeft:5}}  onPress={()=>
   navigation.navigate('DrawerOpen'),
   StatusBarColorChanger(navigation.state.index)
@@ -152,8 +143,8 @@ DrawerView.navigationOptions = ({ navigation}) => ({
  >
   <Icon style={{color:'#fff'}}  name='menu' onPress={()=>navigation.navigate('DrawerOpen')}/>
   </TouchableHighlight>,
-  headerRight : <TouchableHighlight style={{marginRight:20}} >
-  <Icon style={{color:'#fff'}}  name='refresh' onPress={()=>navigation.navigate('Home')}/>
+  headerRight : <TouchableHighlight onPress={()=>navigation.navigate('Reload')} style={{marginRight:20}} >
+  <Icon style={{color:'#fff'}}  name='refresh' onPress={()=>navigation.navigate('Reload')}/>
   </TouchableHighlight>
 });
 
@@ -163,11 +154,15 @@ DrawerView.navigationOptions = ({ navigation}) => ({
 const Main = StackNavigator({
 
   Home : { screen: DrawerView },
-  JobView: { screen: ViewJob },
+  JobView: { screen: ({navigation})=><ViewJob navigator={navigation} /> },
   TopRecruitments: { screen: ({navigation})=><TopRecruitments navigator={navigation} />},
+  SearchJobs: { screen: FindJobs},
+
+  Reload: { screen: DrawerView},
 
 
 });
+
 
 
 

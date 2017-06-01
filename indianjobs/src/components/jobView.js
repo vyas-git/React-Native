@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {Text,View,TouchableHighlight,WebView} from 'react-native';
 import {Header,Left, Button, Icon, Title, Body, Right,Content,Card,CardItem,List,ListItem} from 'native-base';
-import Drawer from 'react-native-drawer';
 import {NativeModules, processColor } from 'react-native';
 const { StatusBarManager } = NativeModules;
-import SideBarContent from './SideBarContent';
 import Fa from 'react-native-vector-icons/FontAwesome';
 import {DrawerNavigator,StackNavigator} from 'react-navigation';
 
@@ -29,7 +27,7 @@ componentDidMount(){
 
      return (
        <WebView scalesPageToFit={true}
-                    renderLoading={()=><Text>No Internet Connection..</Text>}
+                    renderLoading={()=><Text>Loading...</Text>}
                     renderError={()=><Text>No Internet Connection..</Text>}
                     onError={()=><Text>No Internet Connection..</Text>} source={{uri: ''+this.props.navigation.state.params.url+''}}  />
      );

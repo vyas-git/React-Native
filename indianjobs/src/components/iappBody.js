@@ -17,7 +17,7 @@ export default class IAppBody extends Component {
   }
 
   getData(){
-    return fetch('http://www.indianjobs.co.in/feeds/posts/default/-/Hyderabad%20IT%20Walk-in%20Jobs?published&alt=json')
+    return fetch('http://www.indianjobs.co.in/feeds/posts/default/-/Top%20Recruitments?published&alt=json')
      .then((response) => response.json())
      .then((responseJson) => {
 

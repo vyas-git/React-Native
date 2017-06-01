@@ -23,11 +23,25 @@ if(this.props.jobKey=="undefined" || this.props.jobKey==undefined){
 
 }else {
 
+
   var jobKey=this.props.jobKey;
+
 
 }
 
-    return fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q='+jobKey+'&l=Hyderabad&co=in&v=2&format=json&sort=date&limit=25&highlight=0')
+if(this.props.city=="undefined" || this.props.city==undefined){
+  var city="Hyderabad";
+
+}else {
+
+
+  var city=this.props.city;
+
+
+}
+
+
+    return fetch('http://api.indeed.com/ads/apisearch?publisher=1638164786858930&q='+jobKey+'&l='+city+'&co=in&v=2&format=json&sort=date&limit=25&highlight=0')
      .then((response) => response.json())
      .then((responseJson) => {
 this.setState({

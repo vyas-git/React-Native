@@ -3,7 +3,12 @@ import { Image,Text,TouchableHighlight,Navigator} from 'react-native';
 import {Header,Left,Toast,Button, Icon, Title, Body,Thumbnail, Right,Content,Container,Card,CardItem,List,ListItem} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Fa from 'react-native-vector-icons/FontAwesome';
-
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from 'react-native-admob';
 
 
 export default class IAppBodyData extends Component  {
@@ -90,7 +95,10 @@ this.setState({
 
  return(
    <Container>
+   <AdMobBanner bannerSize="fullBanner" adUnitID="ca-app-pub-9438822169696046/7928959012" didFailToReceiveAdWithError={this.bannerError} />
+
      <Content>
+
 {this.state.jobResults}
      </Content>
 
