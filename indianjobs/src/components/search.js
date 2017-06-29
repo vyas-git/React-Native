@@ -10,7 +10,7 @@ export default class SearchJobs extends Component  {
     super();
     this.state={
 
-      selected1:'Hyderabad',
+      selected1:'Chennai',
       text: '',
       disabled:true,
       mode: Picker.MODE_DIALOG,

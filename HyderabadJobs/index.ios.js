@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class HyderabadJobs extends Component {
+export default class hyderabadjobs extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('HyderabadJobs', () => HyderabadJobs);
+AppRegistry.registerComponent('hyderabadjobs', () => hyderabadjobs);

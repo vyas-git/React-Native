@@ -4,6 +4,7 @@ import AppBodyData from './appBodyData';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class AppBody extends Component {
+
   constructor(){
 
     super()
@@ -30,7 +31,7 @@ if(this.props.jobKey=="undefined" || this.props.jobKey==undefined){
 }
 
 if(this.props.city=="undefined" || this.props.city==undefined){
-  var city="Hyderabad";
+  var city="Chennai";
 
 }else {
 
@@ -88,9 +89,20 @@ render() {
       </View>
 
     );
+
   }
 
-  }else {return (
+  }
+  if(this.state.data.length==0){
+    return (
+      <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+
+      <Text>Uff !. Hard Luck !. No Jobs Found !. </Text>
+      </View>
+
+    );
+  }
+  else {return (
 
   <AppBodyData navigator={this.props.navigator} data={this.state.data}/>
 );

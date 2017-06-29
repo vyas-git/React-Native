@@ -27,9 +27,47 @@ componentDidMount() {
 StatusBarManager.setColor(processColor('#D500F9'), false);
 NetInfo.isConnected.addEventListener('change',this._handleConnectivityChange);
 NetInfo.isConnected.fetch().done((isConnected) => { this.setState({isConnected}); });
+
+
+
+AdMobRewarded.setTestDeviceID('EMULATOR');
+AdMobRewarded.setAdUnitID('ca-app-pub-9438822169696046/5392465012');
+
+AdMobRewarded.addEventListener('rewardedVideoDidRewardUser',
+  (type, amount) => console.log('rewardedVideoDidRewardUser', type, amount)
+);
+AdMobRewarded.addEventListener('rewardedVideoDidLoad',
+  () => console.log('rewardedVideoDidLoad')
+);
+AdMobRewarded.addEventListener('rewardedVideoDidFailToLoad',
+  (error) => console.log('rewardedVideoDidFailToLoad', error)
+);
+AdMobRewarded.addEventListener('rewardedVideoDidOpen',
+  () => console.log('rewardedVideoDidOpen')
+);
+AdMobRewarded.addEventListener('rewardedVideoDidClose',
+  () => {
+    console.log('rewardedVideoDidClose');
+    AdMobRewarded.requestAd((error) => error && console.log(error));
+  }
+);
+AdMobRewarded.addEventListener('rewardedVideoWillLeaveApplication',
+  () => console.log('rewardedVideoWillLeaveApplication')
+);
+
+AdMobRewarded.requestAd((error) => error && console.log(error));
+this.showRewarded();
 }
 componentWillUnmount() {
 NetInfo.isConnected.removeEventListener('change',this._handleConnectivityChange);
+AdMobRewarded.removeAllListeners();
+
+}
+
+
+
+showRewarded() {
+  AdMobRewarded.showAd((error) => error && console.log(error));
 }
 _handleConnectivityChange = (isConnected) => {this.setState({isConnected,});};
 render() {
@@ -84,7 +122,7 @@ const DrawerView = DrawerNavigator(
   Home: { screen: TabBar },
 
   "Search Jobs": { screen: ({navigation})=><SearchJobs navigation={navigation} jobKey={"title:Web"}/>},
-  "Rate Us *": { screen: ({navigation})=><RateUs navigation={navigation} url={"https://play.google.com/store/apps/details?id=com.hyderabadjobs"}/>},
+  "Rate Us *": { screen: ({navigation})=><RateUs navigation={navigation} url={"https://play.google.com/store/apps/details?id=com.bangalorejobs"}/>},
   Walkins: { screen: TabBar},
   "Top MNC Recruitments": { screen: ({navigation})=><TopRecruitments navigator={navigation} />},
   "Fresher Jobs": { screen: ({navigation})=><MyProject navigation={navigation} jobKey={"title:Fresher"}/>},
@@ -132,7 +170,7 @@ const StatusBarColorChanger=function(drawerstatus){
 }
 DrawerView.navigationOptions = ({ navigation}) => ({
 
-  headerTitle: 'HyderabadJobs - indianJobs.co.in',
+  headerTitle: 'ChennaiJobs - indianJobs.co.in',
   headerStyle:{backgroundColor:'#AA00FF'},
   headerTitleStyle:{color:'white',aliginItems:'center',fontSize:15},
   headerLeft : <TouchableHighlight style={{marginLeft:5}}  onPress={()=>
@@ -151,20 +189,30 @@ DrawerView.navigationOptions = ({ navigation}) => ({
 
 
 
-const Main = StackNavigator({
+const Main  = StackNavigator({
 
   Home : { screen: DrawerView },
-  JobView: { screen: ({navigation})=><ViewJob navigator={navigation} /> },
+  JobView: { screen: ViewJob },
   TopRecruitments: { screen: ({navigation})=><TopRecruitments navigator={navigation} />},
-  SearchJobs: { screen: FindJobs},
+  SearchJobs: { screen: ({navigation})=><FindJobs navigator={navigation} />},
 
   Reload: { screen: DrawerView},
 
 
-});
+},
+{
+navigationOptions:{
+  headerTitle: 'ChennaiJobs - indianJobs.co.in',
+  headerStyle:{backgroundColor:'#AA00FF',color:'#fff'},
+  headerTitleStyle:{color:'white',aliginItems:'center',fontSize:15},
+headerTintColor:'#fff'
+}
+}
+
+);
 
 
 
 
 
-AppRegistry.registerComponent('HyderabadJobs', () => Main);
+AppRegistry.registerComponent('ChennaiJobs', () => Main);

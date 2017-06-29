@@ -7,6 +7,13 @@ import {AdMobBanner,AdMobInterstitial,PublisherBanner,AdMobRewarded} from 'react
 
 
 export default class AppBodyData extends Component  {
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'HyderabadJobs - indianJobs.co.in',
+    headerStyle:{backgroundColor:'#AA00FF'},
+    headerTitleStyle:{color:'white',aliginItems:'center',fontSize:15},
+
+  headerLeft:<Icon  style={{color:'white',marginLeft:5}} name={'arrow-back'} onPress={()=>navigation.goBack()}  />
+});
 constructor(){
 
   super();

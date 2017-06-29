@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "183459044105",
+    "firebase_url": "https://hyderabad-jobs-ads.firebaseio.com",
+    "project_id": "hyderabad-jobs-ads",
+    "storage_bucket": "hyderabad-jobs-ads.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183459044105:android:2fd803707f70151f",
+        "android_client_info": {
+          "package_name": "com.hyderabadjobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183459044105-fo9mp1eog4c4v2q0oglpla2hl2qqfvq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPTv-wYxY96efoJfThFm7gf6DeOHu7JSc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

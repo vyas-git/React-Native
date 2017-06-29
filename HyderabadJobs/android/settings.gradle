@@ -1,3 +1,7 @@
-rootProject.name = 'HyderabadJobs'
+rootProject.name = 'hyderabadjobs'
+include ':react-native-admob'
+project(':react-native-admob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-admob/android')
+include ':react-native-fcm'
+project(':react-native-fcm').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fcm/android')
 
 include ':app'
