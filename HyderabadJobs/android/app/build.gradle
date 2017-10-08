@@ -94,10 +94,10 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.hyderabadjobs"
+        applicationId "com.mumbaijobs"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
+        versionCode 24
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -143,6 +143,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-restart')
     compile project(':react-native-admob')
     compile project(':react-native-fcm')
     compile 'com.google.firebase:firebase-core:10.0.1' //this decides your firebase SDK version

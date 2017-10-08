@@ -108,6 +108,112 @@
       },
       "oauth_client": [
         {
+          "client_id": "52794390187-vqlv147s8amasmdmhjbl530oke4ahsps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hyderabadjobs",
+            "certificate_hash": "0e11074bd09aa1cc721f34f07e4cbf3e5d18dd23"
+          }
+        },
+        {
+          "client_id": "52794390187-4rdths8mhfsa5bfj8ul3plusu8gvgqam.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1qFAti7csQ3oRF0lBwqeb-7p4Zc8WqOk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52794390187-4rdths8mhfsa5bfj8ul3plusu8gvgqam.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52794390187:android:b29e15c3bc7b3e41",
+        "android_client_info": {
+          "package_name": "com.bangalorejobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52794390187-4rdths8mhfsa5bfj8ul3plusu8gvgqam.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1qFAti7csQ3oRF0lBwqeb-7p4Zc8WqOk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52794390187:android:de374b34c332d623",
+        "android_client_info": {
+          "package_name": "com.chennaijobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52794390187-4rdths8mhfsa5bfj8ul3plusu8gvgqam.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1qFAti7csQ3oRF0lBwqeb-7p4Zc8WqOk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52794390187:android:1db505b319ccde85",
+        "android_client_info": {
+          "package_name": "com.mumbaijobs"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "52794390187-4rdths8mhfsa5bfj8ul3plusu8gvgqam.apps.googleusercontent.com",
           "client_type": 3
         }
